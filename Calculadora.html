@@ -57,6 +57,10 @@
         <button type="button" class="numero" data-numero="9">9</button>
         <button type="button" class="numero" data-numero="0">0</button>
         <button type="button" class="signos" onclick="cambiarSigno()" data-signo="+-">+-</button>
+        <button type="button" class="coma" onclick="agregarComa()">,</button>
+
+
+
         <button onclick="sumar()" class="operaciones">+</button>
         <button onclick="restar()" class="operaciones">-</button>
         <button onclick="multiplicar()" class="operaciones">*</button>
@@ -78,6 +82,12 @@
 
         function agregarNumero(numero)
         {pantalla.value+=numero;}
+        function agregarComa(){
+            if (pantalla.value.includes(",")){
+                alert("Ya hay una coma en el número");}
+                else{
+                pantalla.value+=",";} }
+
         function cambiarSigno()
         {if(pantalla.value==="")
         {alert("No hay número para cambiar el signo");}
@@ -108,41 +118,34 @@
             pantalla.value="";
             segundo_numero="";
         }
-        function calcular()
-        {if(operador==="+"){segundo_numero=pantalla.value;
-            primer_numero=Number(primer_numero);
-            segundo_numero=Number(segundo_numero);
-            let resultado=primer_numero+segundo_numero;
-            pantalla.value=resultado;
-        }else if(operador==="-")
-          {segundo_numero=pantalla.value;
-            primer_numero=Number(primer_numero);
-            segundo_numero=Number(segundo_numero);
-            let resultado=primer_numero-segundo_numero;
-            pantalla.value=resultado;
-        }else if(operador==="*")
-        {segundo_numero=pantalla.value;
-        primer_numero=Number(primer_numero);
-        segundo_numero=Number(segundo_numero);
-        let resultado=primer_numero*segundo_numero;
-        pantalla.value=resultado;
-        }else if(operador==="/")
-        {segundo_numero=pantalla.value;
-        primer_numero=Number(primer_numero);
-        segundo_numero=Number(segundo_numero);
-        let resultado=primer_numero/segundo_numero;
-        if(segundo_numero===0){
-            pantalla.value=" MathError";return;}
-        else{
-        pantalla.value=resultado;
-    }}
-}
-    function limpiar()
-    {pantalla.value="";
-    primer_numero="";
-    segundo_numero="";
-    operador="";}
-
-
-</script>
+        function calcular(){
+            segundo_numero=pantalla.value;
+            const primero=Number(primer_numero.replace(",","."));
+            const segundo=Number(segundo_numero.replace(",","."));
+            let resultado;
+            if(operador==="+"){
+                resultado=primero+segundo;
+                pantalla.value=resultado;
+            }
+            else if(operador==="-"){
+                resultado=primero-segundo;
+                pantalla.value=resultado;
+            }
+            else if(operador==="*"){
+                resultado=primero*segundo;
+                pantalla.value=resultado;
+            }else if(operador==="/"){
+              if(segundo===0){
+                    alert("MathError");
+                    return;}
+                    else{
+                        resultado=primero/segundo;}
+                        pantalla.value=resultado;}}
+        function limpiar() {
+            pantalla.value = "";
+            primer_numero = "";
+            segundo_numero = "";
+            operador = "";
+        }
+    </script>
 </html>
