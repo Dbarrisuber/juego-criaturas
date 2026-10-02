@@ -75,11 +75,9 @@
         let primer_numero="";
         let segundo_numero="";
         let operador="";
-        document.querySelectorAll(".numero").forEach(boton=>{
-            boton.addEventListener("click",function(){
-                agregarNumero(boton.dataset.numero)
-            })})
-
+        document.querySelectorAll(".numero").forEach(boton=>
+        {boton.addEventListener("click",function()
+        {agregarNumero(boton.dataset.numero)})})
         function agregarNumero(numero)
         {pantalla.value+=numero;}
         function agregarComa(){
@@ -120,8 +118,8 @@
         }
         function calcular(){
             segundo_numero=pantalla.value;
-            const primero=Number(primer_numero.replace(",","."))
-            const segundo=Number(segundo_numero.replace(",","."))
+            const primero=Number(primer_numero.replace(",","."));
+            const segundo=Number(segundo_numero.replace(",","."));
             let resultado;
             if(operador==="+"){
                 resultado=primero+segundo;
@@ -136,7 +134,7 @@
                 pantalla.value=resultado;
             }else if(operador==="/"){
               if(segundo===0){
-                    alert("MathError");
+                    alert("MATH ERROR");
                     return;}
                     else{
                         resultado=primero/segundo;}
