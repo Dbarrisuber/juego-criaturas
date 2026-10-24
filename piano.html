@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Piano</title>
+        <style>
+            h1{text-align: center;font-family:Arial, Helvetica, sans-serif;font-size:40px;color:white;border:10px;border-radius:10px;}
+            .teclado{display:flex;justify-content: center;position:relative;margin-top: 200px;}
+            .tecla{width:5rem;height:15rem;border-radius: 10px;padding:5px;background-color: white;}
+            .tecla-negra{position:absolute;width:2.5rem;height:9rem;display:flex;background-color: black;}
+            .tecla.iluminado{background-color:red;}
+            .tecla-negra.iluminado{background-color: blue;}
+            body{background-color: rgb(66, 62, 62);}
+            button[data-note="C#"]{left:580px;}
+            button[data-note="D#"]{left:670px;}
+            button[data-note="F#"]{left:825px;}
+            button[data-note="G#"]{left:905px}
+            button[data-note="A#"]{left:990px;}
+        </style>
+    </head>
+    <body>
+        <h1>EL PIANO</h1>
+        <div id="notas"></div>
+        <div class="teclado">
+            <button type="button" class="tecla" data-note="C"></button>
+            <button type="button" class="tecla" data-note="D"></button>
+            <button type="button" class="tecla" data-note="E"></button>
+            <button type="button" class="tecla" data-note="F"></button>
+            <button type="button" class="tecla" data-note="G"></button>
+            <button type="button" class="tecla" data-note="A"></button>
+            <button type="button" class="tecla" data-note="B"></button>
+            <button type="button" class="tecla" data-note="C1"></button>
+            <button type="button" class="tecla-negra" data-note="C#"></button>
+            <button type="button" class="tecla-negra" data-note="D#"></button>
+            <button type="button" class="tecla-negra" data-note="F#"></button>
+            <button type="button" class="tecla-negra" data-note="G#"></button>
+            <button type="button" class="tecla-negra" data-note="A#"></button>
+        </div>
+        <script>
+            const pantalla=document.getElementById("notas")
+            let contexto_audio=null
+            document.querySelectorAll(".teclado button").forEach(boton=>
+            {boton.addEventListener("click",function()
+            {agregarNota(boton.dataset.note,boton);})})
+            const frecuencias=
+            {"C":261.63,"C#":277.18,"D":293.66,"D#":311.13,"E":329.63,"F":349.23,"F#":369.99,"G":392.00 ,"G#":415.30 ,"A":440.00 ,"A#":466.16 ,"B":493.88 ,"C1":523.25}
+            function agregarNota(nota,boton)
+            {if(contexto_audio===null)
+             {contexto_audio=new AudioContext
+             }let oscilador=contexto_audio.createOscillator()
+                let volumen=contexto_audio.createGain()
+                volumen.gain.value=0.5
+                oscilador.connect(volumen)
+                volumen.connect(contexto_audio.destination)
+                oscilador.frequency.value=frecuencias[nota]
+                boton.classList.add("iluminado")
+                oscilador.addEventListener("ended",function()
+                {boton.classList.remove("iluminado")})
+                oscilador.start()
+                oscilador.stop(contexto_audio.currentTime+0.5)
+                
+               }
+
+        </script>
+    </body>
+</html>
